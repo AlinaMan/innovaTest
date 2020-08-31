@@ -1,0 +1,27 @@
+- 
+  const menuItems = [
+    {
+      main: 'Действия', 
+      sub: ['Просмотры', 'Избранное', 'Отложенное'],
+    },
+    {
+      main: 'Тарифы',
+      sub: ['Тариф 1', 'Тариф 1', 'Тариф 3'],
+    },
+    {
+      main: 'Настройки'
+    }
+  ]
+
+.left-menu
+  ul
+    for item in menuItems
+      li 
+        if (item.sub)
+          span=item.main
+          ul.left-menu__sub
+            for s in item.sub
+              li
+                a(href="#")=s
+        else
+          a(href="#")=item.main
