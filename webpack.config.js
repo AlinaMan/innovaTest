@@ -24,7 +24,7 @@ const optimization = () => {
   return config
 }
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+const filename = ext => isDev ? `${ext}/[name].${ext}` : `${ext}/[name].[hash].${ext}`;
 
 const CSSLoaders = (extra = []) => {
   return [
@@ -32,7 +32,8 @@ const CSSLoaders = (extra = []) => {
       loader: MiniCssExtractPlugin.loader, 
       options: {
         hmr: isDev,
-        reloadAll: true
+        reloadAll: true,
+        publicPath: '../'
       }
     },
     'css-loader',
@@ -83,12 +84,25 @@ module.exports = {
         use: CSSLoaders(['sass-loader'])
       },
       {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: ['file-loader']
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: `static/images/[name]${isDev ? '' : '.[hash]'}.[ext]`
+        }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'file-loader',
+        options: {
+          name: `static/icons/[name]${isDev ? '' : '.[hash]'}.[ext]`
+        }
       },
       {
         test: /\.(ttf|woff|woff2|eot)$/,
-        use: ['file-loader']
+        loader: 'file-loader',
+        options: {
+          name: `static/fonts/[name]${isDev ? '' : '.[hash]'}.[ext]`
+        }
       },
       {
         test: /\.pug$/,
